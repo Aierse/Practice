@@ -40,6 +40,6 @@ class FileAdapter(
             modifiedDate.text = file.lastModified().toString()
         }
 
-        return tempRow!!
+        return row!!
     }
 }

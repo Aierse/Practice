@@ -17,16 +17,21 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private val READ_STORAGE_PERMISSION = 100
-    private lateinit var binding: ActivityMainBinding
     private val EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory().toString()
+    private lateinit var nowPath: String
+    private lateinit var binding: ActivityMainBinding
     lateinit var fileAdapter: FileAdapter
+    lateinit var files: ArrayList<File>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupEvents()
+
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            nowPath = EXTERNAL_STORAGE_PATH
             afterGranted(EXTERNAL_STORAGE_PATH)
         }
         else {
@@ -34,12 +39,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+
+
+        super.onBackPressed()
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == READ_STORAGE_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                afterGranted(EXTERNAL_STORAGE_PATH)
+                nowPath = Environment.getExternalStorageDirectory().toString()
+                afterGranted(nowPath)
             }
             else {
                 if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE))  {
@@ -55,8 +67,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun setupEvents() {
+        binding.fileListView.setOnItemClickListener { adapterView, view, i, l ->
+            val clickedFile = files[i]
+
+            if (clickedFile.isDirectory) {
+                nowPath += "/" + clickedFile.name
+                afterGranted(nowPath)
+            }
+        }
+    }
+
     fun afterGranted(path: String) {
-        val files = File(path).listFiles().toCollection(ArrayList<File>())
+        files = File(path).listFiles().toCollection(ArrayList<File>())
 
         fileAdapter = FileAdapter(this, R.layout.file_list_item, files)
 
