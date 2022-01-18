@@ -61,6 +61,5 @@ class MainActivity : AppCompatActivity() {
         fileAdapter = FileAdapter(this, R.layout.file_list_item, files)
 
         binding.fileListView.adapter = fileAdapter
-
     }
 }
