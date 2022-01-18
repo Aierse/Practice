@@ -15,7 +15,7 @@ import com.example.permission_practice.databinding.ActivityMainBinding
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
-    val READ_STORAGE_PERMISSION = 100
+    private val READ_STORAGE_PERMISSION = 100
     private lateinit var binding: ActivityMainBinding
     private val EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory().toString()
 
