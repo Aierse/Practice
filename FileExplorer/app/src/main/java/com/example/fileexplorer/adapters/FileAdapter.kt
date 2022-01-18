@@ -16,13 +16,7 @@ class FileAdapter(
     private val inf = LayoutInflater.from(mContext)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var tempRow = convertView
-
-        if (tempRow == null) {
-            tempRow = inf.inflate(R.layout.file_list_item, null)
-        }
-
-        val row = tempRow!!
+        var row = convertView ?: inf.inflate(R.layout.file_list_item, null)
 
         val file = mList[position]
         val fileName = row.findViewById<TextView>(R.id.fileName)
@@ -40,6 +34,6 @@ class FileAdapter(
             modifiedDate.text = file.lastModified().toString()
         }
 
-        return row!!
+        return row
     }
 }
