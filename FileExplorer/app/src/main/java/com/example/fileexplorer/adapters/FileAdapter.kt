@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.fileexplorer.R
 import java.io.File
+import java.text.SimpleDateFormat
 
 class FileAdapter(
     private val mContext: Context,
@@ -28,10 +29,10 @@ class FileAdapter(
             fileSize.text = ""
             modifiedDate.text = ""
         }
-        else {
+        else if (file.extension == "txt"){
             fileName.text = file.name
-            fileSize.text = file.length().toString()
-            modifiedDate.text = file.lastModified().toString()
+            fileSize.text = (file.length() / 1024).toString() + "KB"
+            modifiedDate.text = SimpleDateFormat("yyyy/MM/dd").format(file.lastModified())
         }
 
         return row
