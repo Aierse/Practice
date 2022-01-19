@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.fileexplorer.databinding.ActivityTextViewerBinding
 import java.io.File
+import java.io.FileReader
+import java.io.IOException
 
 class TextViewer : AppCompatActivity() {
     lateinit var binding: ActivityTextViewerBinding
@@ -15,6 +17,14 @@ class TextViewer : AppCompatActivity() {
 
         val file = intent.getSerializableExtra("file") as File
 
-        binding.fileContent.text = file.name
+        try {
+            val read = FileReader(file)
+            var content: String = read.readText()
+
+            binding.fileContent.text = content
+        }
+        catch (e: IOException){
+
+        }
     }
 }

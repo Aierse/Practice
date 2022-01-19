@@ -26,6 +26,7 @@
             android:textColor="#FFFFFF"
             android:textSize="18dp"
             android:text="/" />
+
         <TextView
             android:id="@+id/totalLine"
             android:layout_width="wrap_content"
