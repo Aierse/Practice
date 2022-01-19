@@ -58,10 +58,10 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(Uri.parse("package:" + BuildConfig.APPLICATION_ID))
                     startActivity(intent)
 
-                    Toast.makeText(applicationContext, "권한 설정 후 다시 실행 해주세요.", Toast.LENGTH_SHORT).show()
+                    shortToastShow("권한 설정 후 다시 실행 해주세요.")
                 }
                 else {
-                    Toast.makeText(this, "권한 거부되었습니다.", Toast.LENGTH_SHORT).show()
+                    shortToastShow("권한 거부되었습니다.")
                 }
             }
         }
@@ -75,14 +75,27 @@ class MainActivity : AppCompatActivity() {
                 nowPath += "/" + clickedFile.name
                 afterGranted(nowPath)
             }
+            else if (clickedFile.extension == "txt") {
+                shortToastShow("텍스트")
+            }
         }
     }
 
     fun afterGranted(path: String) {
         files = File(path).listFiles().toCollection(ArrayList<File>())
 
+        files.forEach {
+            if (!(it.isDirectory || it.extension == "txt")) {
+                files.remove(it)
+            }
+        }
+
         fileAdapter = FileAdapter(this, R.layout.file_list_item, files)
 
         binding.fileListView.adapter = fileAdapter
+    }
+
+    fun shortToastShow(text: String) {
+        Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
     }
 }
