@@ -29,7 +29,7 @@ class FileAdapter(
             fileSize.text = ""
             modifiedDate.text = ""
         }
-        else if (file.extension == "txt"){
+        else {
             fileName.text = file.name
             fileSize.text = (file.length() / 1024).toString() + "KB"
             modifiedDate.text = SimpleDateFormat("yyyy/MM/dd").format(file.lastModified())
