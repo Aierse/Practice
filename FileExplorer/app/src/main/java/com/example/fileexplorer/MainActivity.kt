@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun afterGranted(path: String) {
-        files = File(path).listFiles().toCollection(ArrayList<File>())
+        files = File(path).listFiles()!!.toCollection(ArrayList<File>())
 
         files.forEach {
             if (!(it.isDirectory || it.extension == "txt")) {
