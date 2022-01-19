@@ -76,7 +76,10 @@ class MainActivity : AppCompatActivity() {
                 afterGranted(nowPath)
             }
             else if (clickedFile.extension == "txt") {
-                shortToastShow("텍스트")
+                val textViewerIntent = Intent(this, TextViewer::class.java)
+                textViewerIntent.putExtra("file", clickedFile)
+
+                startActivity(textViewerIntent)
             }
         }
     }
