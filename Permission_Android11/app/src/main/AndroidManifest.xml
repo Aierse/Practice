@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.permission_practice">
-
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    package="com.example.permission_android11">
 
     <application
         android:allowBackup="true"
@@ -10,7 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Permission_Practice">
+        android:theme="@style/Theme.Permission_Android11">
         <activity
             android:name=".MainActivity"
             android:exported="true">
