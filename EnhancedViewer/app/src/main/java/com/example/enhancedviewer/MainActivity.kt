@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStreamReader
+import java.lang.StringBuilder
 import java.net.URI
 
 class MainActivity : AppCompatActivity() {
@@ -26,5 +28,26 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_OPEN_FILE)
     }
 
-    
+
+
+    private fun readFile(uri: URI): String {
+        val stringBuilder = StringBuilder()
+
+        try {
+            val inputStream = contentResolver.openInputStream(uri)
+            val reader = BufferedReader(InputStreamReader(inputStream))
+
+            while (true) {
+                var currentline: String? = reader.readLine() ?: break
+
+                stringBuilder.append(currentline + "\n")
+            }
+
+            inputStream?.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return stringBuilder.toString()
+    }
 }
