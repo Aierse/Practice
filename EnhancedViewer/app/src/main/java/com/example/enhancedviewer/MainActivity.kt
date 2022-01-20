@@ -5,16 +5,18 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import java.io.BufferedReader
+import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
-    private val REQUEST_OPEN_FILE = 40
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
+    private val OPEN_REQUEST_CODE = 41
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,17 +28,19 @@ class MainActivity : AppCompatActivity() {
             type = "text/plain"
         }
 
-        startActivityForResult(intent, REQUEST_OPEN_FILE)
+        startActivityForResult(intent, OPEN_REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == Activity.RESULT_OK) {
+        var currentUri: Uri? = null
+
+        if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                REQUEST_OPEN_FILE -> {
-                    data?.let { it ->
-                        var currentUri = it.data
+                OPEN_REQUEST_CODE -> {
+                    data?.let {
+                        currentUri = it.data
                         currentUri?.let {
                             val content = readFile(it)
                             binding.textView.text = content
@@ -55,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             val reader = BufferedReader(InputStreamReader(inputStream))
 
             while (true) {
-                var currentline: String? = reader.readLine() ?: break
+                var currentline = reader.readLine() ?: break
 
                 stringBuilder.append(currentline + "\n")
             }
@@ -65,8 +69,10 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        Toast.makeText(this, stringBuilder.toString() + "AAAA", Toast.LENGTH_SHORT)
-
         return stringBuilder.toString()
+    }
+
+    fun openFile(view: View) {
+
     }
 }
