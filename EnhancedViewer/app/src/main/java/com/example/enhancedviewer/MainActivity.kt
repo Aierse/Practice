@@ -71,8 +71,4 @@ class MainActivity : AppCompatActivity() {
 
         return stringBuilder.toString()
     }
-
-    fun openFile(view: View) {
-
-    }
 }
