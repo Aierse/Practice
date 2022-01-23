@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.view.View
 import android.widget.Toast
 import com.example.enhancedviewer.databinding.ActivityMainBinding
@@ -33,14 +34,17 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        var currentUri: Uri? = null
-
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 OPEN_REQUEST_CODE -> {
-                    data?.let {
-                        currentUri = it.data
-                        currentUri?.let { it ->
+                    data?.let { it ->
+                        it.data?.let { it ->
+                            contentResolver.query(it, null, null, null, null)?.use { cursor ->
+                                val name = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                                cursor.moveToFirst()
+                                binding.name.text = cursor.getString(name)
+                            }
+
                             val content = readFile(it)
                             binding.textView.text = content
                         }
