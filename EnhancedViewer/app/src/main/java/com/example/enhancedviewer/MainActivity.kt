@@ -49,6 +49,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        else {
+            //아무런 파일도 선택되지 않았을 때 종료
+            finish()
+        }
     }
 
     private fun readFile(uri: Uri): String {
