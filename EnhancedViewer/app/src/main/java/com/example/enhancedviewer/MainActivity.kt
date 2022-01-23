@@ -23,12 +23,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "text/plain"
-        }
+        openFileExplorer()
+    }
 
-        startActivityForResult(intent, OPEN_REQUEST_CODE)
+    override fun onBackPressed() {
+        openFileExplorer()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -53,6 +52,15 @@ class MainActivity : AppCompatActivity() {
             //아무런 파일도 선택되지 않았을 때 종료
             finish()
         }
+    }
+
+    private fun openFileExplorer() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/plain"
+        }
+
+        startActivityForResult(intent, OPEN_REQUEST_CODE)
     }
 
     private fun readFile(uri: Uri): String {
