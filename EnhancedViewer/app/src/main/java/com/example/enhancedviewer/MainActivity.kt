@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 OPEN_REQUEST_CODE -> {
                     data?.let {
                         currentUri = it.data
-                        currentUri?.let {
+                        currentUri?.let { it ->
                             val content = readFile(it)
                             binding.textView.text = content
                         }
