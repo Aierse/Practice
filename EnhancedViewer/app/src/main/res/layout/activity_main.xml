@@ -20,7 +20,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="name212313112313"
+            android:text="name"
             android:textColor="#FFFFFF"
             android:textSize="30dp" />
 
@@ -34,10 +34,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/gear" />
-
-
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/textView"
