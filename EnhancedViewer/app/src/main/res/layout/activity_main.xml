@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="370dp"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
@@ -30,8 +30,8 @@
             android:layout_weight="1" />
 
         <Button
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/gear"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -64,11 +64,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/totalLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:text="endLine"
+            android:text="totalLine"
             android:textSize="25sp"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toEndOf="@+id/textView2"
@@ -79,7 +79,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="textContent"
         android:textSize="15sp"
         android:lineSpacingExtra="10dp"
         android:textColor="#FFFFFF" />
