@@ -6,11 +6,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
-import android.view.View
-import android.widget.Toast
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import java.io.BufferedReader
-import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
@@ -47,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
                             val content = readFile(it)
                             binding.textView.text = content
+                            binding.totalLine.text = binding.textView.maxLines.toString()
                         }
                     }
                 }
