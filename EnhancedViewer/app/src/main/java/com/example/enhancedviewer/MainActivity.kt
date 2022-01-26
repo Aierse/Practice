@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
                             val content = readFile(it)
                             binding.textView.text = content
-                            binding.totalLine.text = binding.textView.lineCount.toString()
+                            binding.totalLine.text = binding.textView.layout.height.toString()
                         }
                     }
                 }
