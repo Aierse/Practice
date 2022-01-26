@@ -6,13 +6,14 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.view.View
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ScrollViewListener {
     private lateinit var binding: ActivityMainBinding
     private val OPEN_REQUEST_CODE = 41
 
@@ -21,11 +22,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.textBar.nowLine = binding.nowLine
+        binding.textBar.lineHeight = binding.textView.lineHeight
+        //binding.textBar.realLineHeight = binding.textView.layout.height - (binding.textView.lineCount - 1) * binding.textView.lineHeight
+
         openFileExplorer()
     }
 
     override fun onBackPressed() {
         openFileExplorer()
+    }
+
+    override fun onScrollChanged(scrollView: ObservableScrollView, x: Int, y: Int, oldx: Int, oldy: Int) {
+        binding.textBar.scrollTo(x, y)
+        binding.nowLine.text = binding.textBar.scrollY.toString()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -44,6 +54,7 @@ class MainActivity : AppCompatActivity() {
 
                             val content = readFile(it)
                             binding.textView.text = content
+
                             binding.totalLine.text = binding.textView.layout.height.toString()
                         }
                     }
@@ -84,5 +95,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         return stringBuilder.toString()
+    }
+
+    fun menu(view: View) {
+        binding.textBar.scrollTo(0, binding.textView.bottom)
     }
 }

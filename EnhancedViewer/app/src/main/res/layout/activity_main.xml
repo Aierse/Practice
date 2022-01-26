@@ -35,6 +35,7 @@
             android:layout_height="48dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/gear"
+            android:onClick="menu"
             tools:ignore="SpeakableTextPresentCheck" />
     </LinearLayout>
 
@@ -76,10 +77,10 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
+    <com.example.enhancedviewer.ObservableScrollView
         android:id="@+id/textBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbarFadeDuration="0"
         android:scrollbarSize="8dp"
@@ -92,8 +93,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.5"
+            android:includeFontPadding="false"
             tools:text="textContent"
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
-    </ScrollView>
+    </com.example.enhancedviewer.ObservableScrollView>
 </LinearLayout>
