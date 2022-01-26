@@ -80,7 +80,7 @@
     <com.example.enhancedviewer.ObservableScrollView
         android:id="@+id/textBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbarFadeDuration="0"
         android:scrollbarSize="8dp"
@@ -88,14 +88,22 @@
         android:scrollbarThumbVertical="@color/white"
         android:scrollbarTrackVertical="@color/black">
 
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
+            android:id="@+id/textArea"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingMultiplier="1.5"
-            android:includeFontPadding="false"
-            tools:text="textContent"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                tools:text="textContent" />
+        </LinearLayout>
+
     </com.example.enhancedviewer.ObservableScrollView>
 </LinearLayout>

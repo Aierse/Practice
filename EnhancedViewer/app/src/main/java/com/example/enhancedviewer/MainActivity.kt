@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import java.io.BufferedReader
 import java.io.IOException
@@ -21,10 +23,6 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.textBar.nowLine = binding.nowLine
-        binding.textBar.lineHeight = binding.textView.lineHeight
-        //binding.textBar.realLineHeight = binding.textView.layout.height - (binding.textView.lineCount - 1) * binding.textView.lineHeight
 
         openFileExplorer()
     }
@@ -52,8 +50,14 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
                                 binding.name.text = cursor.getString(name)
                             }
 
+                            correctionScrollBar()
+
                             val content = readFile(it)
                             binding.textView.text = content
+
+                            binding.textBar.nowLine = binding.nowLine
+                            binding.textBar.lineHeight = binding.textView.lineHeight
+                            //binding.textBar.realLineHeight = binding.textView.layout.height - (binding.textView.lineCount - 1) * binding.textView.lineHeight
 
                             binding.totalLine.text = binding.textView.layout.height.toString()
                         }
@@ -99,5 +103,12 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
 
     fun menu(view: View) {
         binding.textBar.scrollTo(0, binding.textView.bottom)
+    }
+
+    private fun correctionScrollBar() {
+        val temp = View(this)
+        temp.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, binding.textBar.height, 1f)
+
+        binding.textArea.addView(temp)
     }
 }
