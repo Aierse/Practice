@@ -11,16 +11,30 @@ interface ScrollViewListener {
 
 class ObservableScrollView : ScrollView {
     lateinit var nowLine: TextView
-    var lineHeight: Int = 0
-    var realLineHeight: Int = 0
+    lateinit var converter: Converter
+
+    var line: Int
+    get() {
+        return converter.pixelToLine(scrollY) + 1
+    }
+    set(value: Int) {
+        scrollY = converter.lineToPixel(value)
+    }
+
+    var page: Int
+    get() {
+        return converter.pixelToPage(scrollY) + 1
+    }
+    set(value: Int) {
+        scrollY = converter.pageToPixel(value)
+    }
 
     constructor(context: Context?) :
             super(context) {
-
     }
+
     constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) :
             super(context, attrs, defStyle) {
-
     }
 
     constructor(context: Context?, attrs: AttributeSet?) :
@@ -29,10 +43,6 @@ class ObservableScrollView : ScrollView {
 
     override fun onScrollChanged(x: Int, y: Int, oldx: Int, oldy: Int) {
         super.onScrollChanged(x, y, oldx, oldy)
-        nowLine.text = y.toString()
-    }
-
-    fun convertToLine(value: Int): Int {
-        return value / 83
+        nowLine.text = line.toString()
     }
 }
