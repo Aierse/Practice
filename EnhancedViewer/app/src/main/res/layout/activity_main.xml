@@ -98,8 +98,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:lineSpacingExtra="10sp"
+                android:lineSpacingMultiplier="1.5"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 tools:text="textContent" />
