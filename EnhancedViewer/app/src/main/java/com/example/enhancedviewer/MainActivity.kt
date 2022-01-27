@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
                                 converter = Converter(textView.layout.height, textBar.height, textView.lineCount)
                             }
 
-                            binding.totalLine.text = binding.textView.lineCount.toString()
+                            binding.totalLine.text = binding.textView.lineCount.toString()//binding.textView.lineCount.toString()
                         }
                     }
                 }
@@ -91,8 +91,10 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
             val inputStream = contentResolver.openInputStream(uri)
             val reader = BufferedReader(InputStreamReader(inputStream))
 
+            var currentline: String? = null
+
             while (true) {
-                var currentline = reader.readLine() ?: break
+                currentline = reader.readLine() ?: break
 
                 stringBuilder.append(currentline + "\n")
             }
@@ -102,17 +104,20 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
             e.printStackTrace()
         }
 
-        return stringBuilder.toString()
+        val target: String = stringBuilder.toString()
+
+        return target.substring(0, target.length - 1)
     }
 
     fun menu(view: View) {
-        binding.textBar.scrollTo(0, binding.textView.bottom)
+        binding.textBar.page += 1
+        //binding.textBar.scrollTo(0, binding.textView.bottom)
     }
 
     private fun correctionScrollBar() {
         if (correctionable) {
             val temp = View(this)
-            temp.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, binding.textBar.height - binding.textView.lineHeight, 1f)
+            temp.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, binding.textBar.height - 46, 1f)
 
             binding.textArea.addView(temp)
             correctionable = false
