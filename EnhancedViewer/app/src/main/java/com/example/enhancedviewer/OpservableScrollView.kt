@@ -15,7 +15,7 @@ class ObservableScrollView : ScrollView {
 
     var line: Int
     get() {
-        return converter.pixelToLine(scrollY) + 1
+        return converter.pixelToLine(scrollY)
     }
     set(value: Int) {
         scrollY = converter.lineToPixel(value)
@@ -23,10 +23,12 @@ class ObservableScrollView : ScrollView {
 
     var page: Int
     get() {
-        return converter.pixelToPage(scrollY) + 1
+        return converter.pixelToPage(scrollY)
     }
     set(value: Int) {
-        scrollY = converter.pageToPixel(value)
+        val movement = converter.pageToPixel(value - page)
+
+        scrollY = ((scrollY + movement) % (converter.canShowLineCount * converter.realLineHeight)).toInt()
     }
 
     constructor(context: Context?) :
@@ -43,6 +45,6 @@ class ObservableScrollView : ScrollView {
 
     override fun onScrollChanged(x: Int, y: Int, oldx: Int, oldy: Int) {
         super.onScrollChanged(x, y, oldx, oldy)
-        nowLine.text = line.toString()
+        nowLine.text = (line + 1).toString()
     }
 }
