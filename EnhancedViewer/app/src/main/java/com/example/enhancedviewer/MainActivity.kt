@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.example.enhancedviewer.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.view.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -18,6 +19,7 @@ import java.lang.StringBuilder
 class MainActivity : AppCompatActivity(), ScrollViewListener {
     private lateinit var binding: ActivityMainBinding
     private val OPEN_REQUEST_CODE = 41
+    var correctionable = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,16 +52,18 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
                                 binding.name.text = cursor.getString(name)
                             }
 
-                            correctionScrollBar()
-
                             val content = readFile(it)
                             binding.textView.text = content
 
-                            binding.textBar.nowLine = binding.nowLine
-                            binding.textBar.lineHeight = binding.textView.lineHeight
-                            //binding.textBar.realLineHeight = binding.textView.layout.height - (binding.textView.lineCount - 1) * binding.textView.lineHeight
+                            correctionScrollBar()
 
-                            binding.totalLine.text = binding.textView.layout.height.toString()
+                            binding.textBar.apply {
+                                scrollY = 0
+                                nowLine = binding.nowLine
+                                converter = Converter(textView.layout.height, textBar.height, textView.lineCount)
+                            }
+
+                            binding.totalLine.text = binding.textView.lineCount.toString()
                         }
                     }
                 }
@@ -106,9 +110,12 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
     }
 
     private fun correctionScrollBar() {
-        val temp = View(this)
-        temp.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, binding.textBar.height, 1f)
+        if (correctionable) {
+            val temp = View(this)
+            temp.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, binding.textBar.height - binding.textView.lineHeight, 1f)
 
-        binding.textArea.addView(temp)
+            binding.textArea.addView(temp)
+            correctionable = false
+        }
     }
 }
