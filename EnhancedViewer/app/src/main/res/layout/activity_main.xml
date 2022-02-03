@@ -24,7 +24,7 @@
             android:maxLines="1"
             android:text="name"
             android:textColor="#FFFFFF"
-            android:textSize="35sp" />
+            android:textSize="28sp" />
 
         <View
             android:layout_width="0dp"
@@ -51,7 +51,7 @@
             android:layout_marginEnd="28dp"
             android:text="1"
             android:textColor="#FFFFFF"
-            android:textSize="25sp"
+            android:textSize="15sp"
             app:layout_constraintEnd_toStartOf="@+id/slash"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="nowLine" />
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="/"
             android:textColor="#FFFFFF"
-            android:textSize="25sp"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +74,7 @@
             android:layout_marginStart="28dp"
             android:text="totalLine"
             android:textColor="#FFFFFF"
-            android:textSize="25sp"
+            android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/slash"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -106,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingMultiplier="1.5"
                     android:textColor="#FFFFFF"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     tools:text="textContent" />
             </LinearLayout>
 
