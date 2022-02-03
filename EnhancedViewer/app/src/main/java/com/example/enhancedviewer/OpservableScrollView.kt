@@ -26,9 +26,7 @@ class ObservableScrollView : ScrollView {
         return converter.pixelToPage(scrollY)
     }
     set(value: Int) {
-        val movement = converter.pageToPixel(value - page)
-
-        scrollY = ((scrollY + movement) % (converter.canShowLineCount * converter.realLineHeight)).toInt()
+        scrollY = converter.pageToPixel(value)
     }
 
     constructor(context: Context?) :
