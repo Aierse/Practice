@@ -47,9 +47,12 @@
 
         <TextView
             android:id="@+id/nowLine"
-            android:layout_width="wrap_content"
+            android:layout_width="174dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="28dp"
+            android:gravity="right"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="1"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
@@ -70,9 +73,11 @@
 
         <TextView
             android:id="@+id/totalLine"
-            android:layout_width="wrap_content"
+            android:layout_width="174dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="totalLine"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
