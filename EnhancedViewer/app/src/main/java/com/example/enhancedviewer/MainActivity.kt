@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
             var currentline: String? = null
 
             while (true) {
-                currentline = reader.readLine() ?: break
+                currentline = Filter.deleteGarbageText(reader.readLine()) ?: break
 
                 stringBuilder.append(currentline + "\n")
             }
