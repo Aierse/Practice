@@ -26,7 +26,7 @@ class ObservableScrollView : ScrollView {
         return converter.pixelToPage(scrollY)
     }
     set(value: Int) {
-        scrollY = converter.pageToPixel(value)
+        scrollY += converter.pageToPixel(value - page) - converter.realLineHeight.toInt()
     }
 
     constructor(context: Context?) :
