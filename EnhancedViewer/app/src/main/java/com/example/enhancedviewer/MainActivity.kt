@@ -30,6 +30,11 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
     }
 
     override fun onBackPressed() {
+        if (binding.menu.visibility == View.VISIBLE) {
+            binding.menu.visibility = View.INVISIBLE
+            return
+        }
+
         openFileExplorer()
     }
 
@@ -110,8 +115,11 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
     }
 
     fun menu(view: View) {
-        binding.textBar.page += 1
-        //binding.textBar.scrollTo(0, binding.textView.bottom)
+        if (binding.menu.visibility == View.INVISIBLE)
+            binding.menu.visibility = View.VISIBLE
+        else {
+            binding.menu.visibility = View.INVISIBLE
+        }
     }
 
     private fun correctionScrollBar() {

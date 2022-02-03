@@ -48,7 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="28dp"
-            android:text="nowLine"
+            android:text="1"
+            tools:text="nowLine"
             android:textColor="#FFFFFF"
             android:textSize="25sp"
             app:layout_constraintEnd_toStartOf="@+id/slash"
@@ -77,32 +78,90 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.example.enhancedviewer.ObservableScrollView
-        android:id="@+id/textBar"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbarFadeDuration="0"
-        android:scrollbarSize="8dp"
-        android:scrollbarStyle="insideInset"
-        android:scrollbarThumbVertical="@color/white"
-        android:scrollbarTrackVertical="@color/black">
+        android:layout_height="match_parent" >
 
-        <LinearLayout
-            android:id="@+id/textArea"
+        <com.example.enhancedviewer.ObservableScrollView
+            android:id="@+id/textBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="8dp"
+            android:scrollbarStyle="insideInset"
+            android:scrollbarThumbVertical="@color/white"
+            android:scrollbarTrackVertical="@color/black">
 
-            <TextView
-                android:id="@+id/textView"
+            <LinearLayout
+                android:id="@+id/textArea"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lineSpacingMultiplier="1.5"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp"
-                tools:text="textContent" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    </com.example.enhancedviewer.ObservableScrollView>
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1.5"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    tools:text="textContent" />
+            </LinearLayout>
+
+        </com.example.enhancedviewer.ObservableScrollView>
+
+        <TableLayout
+            android:id="@+id/menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:visibility="invisible"
+            android:background="#FFFFFF"
+            android:paddingTop="1dp"
+            android:stretchColumns="*">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="북마크 추가"
+                    android:textColor="#FFFFFF"
+                    android:background="#000000"
+                    android:textSize="20sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="북마크 이동"
+                    android:textColor="#FFFFFF"
+                    android:background="#000000"
+                    android:textSize="20sp" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="페이지 이동"
+                    android:textColor="#FFFFFF"
+                    android:background="#000000"
+                    android:textSize="20sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="설정"
+                    android:textColor="#FFFFFF"
+                    android:background="#000000"
+                    android:textSize="20sp" />
+            </TableRow>
+        </TableLayout>
+    </FrameLayout>
+
 </LinearLayout>
