@@ -11,9 +11,11 @@ class Filter {
     companion object {
         private val quota: CharArray = charArrayOf('\'', '\"')
         private val bracket: CharArray = charArrayOf('{', '[', '(')
+        private val bracketClose: CharArray = charArrayOf('}', ']', ')')
         private val termination: CharArray = charArrayOf('.', ',', '!', '?')
 
         fun isBracket(value: Char): Boolean = bracket.contains(value)
+        fun isBracketClose(value: Char): Boolean = bracketClose.contains(value)
         fun isTermination(value: Char): Boolean = termination.contains(value)
 
         fun deleteGarbageText(value: String): String {
@@ -34,7 +36,12 @@ class Filter {
         val temp = arrayListOf<String>()
 
         for (i in value.indices) {
-            
+            if (isBracket(value[i])) {
+                bracketOpen = true
+            }
+            if (isBracketClose(value[i])) {
+                bracketOpen = false
+            }
         }
     }
 }
