@@ -14,9 +14,10 @@ class Filter {
         private val bracketClose: CharArray = charArrayOf('}', ']', ')')
         private val termination: CharArray = charArrayOf('.', ',', '!', '?')
 
-        fun isBracket(value: Char): Boolean = bracket.contains(value)
-        fun isBracketClose(value: Char): Boolean = bracketClose.contains(value)
-        fun isTermination(value: Char): Boolean = termination.contains(value)
+        private fun isQuota(value: Char): Boolean = quota.contains(value)
+        private fun isBracket(value: Char): Boolean = bracket.contains(value)
+        private fun isBracketClose(value: Char): Boolean = bracketClose.contains(value)
+        private fun isTermination(value: Char): Boolean = termination.contains(value)
 
         fun deleteGarbageText(value: String): String {
             var temp = value.trim()
@@ -39,8 +40,23 @@ class Filter {
             if (isBracket(value[i])) {
                 bracketOpen = true
             }
-            if (isBracketClose(value[i])) {
+            else if (isBracketClose(value[i])) {
                 bracketOpen = false
+            }
+            else if (!duringOpen) { // 개행중이 아닐 때
+                val nextChar = value[i + 1]
+
+                if (isTermination(nextChar)) // 연속된 ... 일때 넘기기
+                    continue
+
+                if (sb.length < 15 && isQuota(nextChar)) // 문장의 길이가 짧을 때 다음으로 미룸
+                    continue
+
+                temp.add(sb.toString())
+                sb.setLength(0)
+            }
+            else if (isQuota(value[i])) {
+
             }
         }
     }
