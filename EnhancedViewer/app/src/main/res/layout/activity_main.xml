@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
+    android:backgroundTint="#000000"
     android:orientation="vertical"
     android:visibility="visible"
     tools:context=".MainActivity">
@@ -49,11 +50,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="28dp"
             android:text="1"
-            tools:text="nowLine"
             android:textColor="#FFFFFF"
             android:textSize="25sp"
             app:layout_constraintEnd_toStartOf="@+id/slash"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="nowLine" />
 
         <TextView
             android:id="@+id/slash"
@@ -80,7 +81,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <com.example.enhancedviewer.ObservableScrollView
             android:id="@+id/textBar"
@@ -116,49 +117,52 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:visibility="invisible"
             android:background="#FFFFFF"
             android:paddingTop="1dp"
-            android:stretchColumns="*">
+            android:stretchColumns="*"
+            android:visibility="invisible">
 
             <TableRow>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#000000"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="북마크 추가"
                     android:textColor="#FFFFFF"
-                    android:background="#000000"
                     android:textSize="20sp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#000000"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="북마크 이동"
                     android:textColor="#FFFFFF"
-                    android:background="#000000"
                     android:textSize="20sp" />
             </TableRow>
+
             <TableRow>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#000000"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="페이지 이동"
                     android:textColor="#FFFFFF"
-                    android:background="#000000"
                     android:textSize="20sp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#000000"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="설정"
                     android:textColor="#FFFFFF"
-                    android:background="#000000"
                     android:textSize="20sp" />
             </TableRow>
         </TableLayout>
