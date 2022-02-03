@@ -1,6 +1,7 @@
 package com.example.enhancedviewer
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.view.*
@@ -15,6 +17,10 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
+import android.text.InputType
+import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_ENTER
+
 
 class MainActivity : AppCompatActivity(), ScrollViewListener {
     private lateinit var binding: ActivityMainBinding
@@ -120,6 +126,38 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
         else {
             binding.menu.visibility = View.INVISIBLE
         }
+    }
+
+    fun move(view: View) {
+        binding.menu.visibility = View.INVISIBLE
+
+        val edit = EditText(this).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+
+            setOnKeyListener { v, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
+                    binding.textBar.line = text.toString().toInt() - 1
+                }
+
+                true
+            }
+        }
+
+        val dialog = AlertDialog.Builder(this).apply {
+
+            setTitle("페이지 이동")
+            setMessage("페이지를 입력하세요.")
+            setView(edit)
+
+            setPositiveButton("확인") { dialog, which ->
+                binding.textBar.line = edit.text.toString().toInt() - 1
+            }
+            setNegativeButton("취소") { dialog, which ->
+                dialog.dismiss()
+            }
+        }
+
+        dialog.show()
     }
 
     private fun correctionScrollBar() {

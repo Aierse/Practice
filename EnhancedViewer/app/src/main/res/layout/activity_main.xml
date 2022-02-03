@@ -161,6 +161,7 @@
                     android:layout_height="wrap_content"
                     android:background="#000000"
                     android:gravity="center"
+                    android:onClick="move"
                     android:padding="10dp"
                     android:text="페이지 이동"
                     android:textColor="#FFFFFF"
