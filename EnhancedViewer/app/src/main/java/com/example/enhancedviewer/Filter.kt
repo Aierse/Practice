@@ -2,14 +2,14 @@ package com.example.enhancedviewer
 
 class Filter {
     private var bracketOpen: Boolean = false
-    private var quataOpen: Boolean = false
+    private var quotaOpen: Boolean = false
     private val duringOpen: Boolean
     get() {
-        return bracketOpen || quataOpen
+        return bracketOpen || quotaOpen
     }
 
     companion object {
-        private val quata: CharArray = charArrayOf('\'', '\"')
+        private val quota: CharArray = charArrayOf('\'', '\"')
         private val bracket: CharArray = charArrayOf('{', '[', '(')
         private val termination: CharArray = charArrayOf('.', ',', '!', '?')
 
@@ -33,8 +33,8 @@ class Filter {
         val sb = StringBuilder()
         val temp = arrayListOf<String>()
 
-        for (i in 0..value.length) {
-
+        for (i in value.indices) {
+            
         }
     }
 }
