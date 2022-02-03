@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
                             }
 
                             val content = readFile(it)
-                            binding.textView.text = content
+                            binding.textView.text = Filter().arrangement(content)
 
                             correctionScrollBar()
 

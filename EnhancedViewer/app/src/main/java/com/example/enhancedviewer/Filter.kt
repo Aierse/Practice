@@ -26,7 +26,7 @@ class Filter {
         private fun isTermination(value: Char): Boolean = termination.contains(value)
 
         fun deleteGarbageText(value: String): String {
-            var temp = value.trim()
+            var temp = value
             temp = temp.replace("‘", "'")
             temp = temp.replace("’", "'")
             temp = temp.replace("“", "\"")
@@ -47,7 +47,8 @@ class Filter {
         return temp
     }
 
-    fun arragement(value: String) {
+    fun arrangement(text: String): String {
+        val value = text.replace("\\r\\n|\\r|\\n|\\n\\r".toRegex(),"")
         val sb = StringBuilder()
         val temp = arrayListOf<String>()
 
@@ -61,18 +62,23 @@ class Filter {
                 bracketOpen = false
             }
 
-            else if (!duringOpen && i + 1 < value.length) { // 개행중이 아닐 때
-                val nextChar = value[i + 1]
+            else if (isTermination(value[i])) {
+                if (!duringOpen && i + 1 < value.length) { // 개행중이 아닐 때
+                    val nextChar = value[i + 1]
 
-                if (isTermination(nextChar)) // 연속된 ... 일때 넘기기
-                    continue
+                    if (isTermination(nextChar)) // 연속된 ... 일때 넘기기
+                        continue
 
-                if (sb.length < 15 && isQuota(nextChar)) // 문장의 길이가 짧을 때 다음으로 미룸
-                    continue
+                    if (sb.length < 20 && !isQuota(nextChar)) { // 문장의 길이가 짧을 때 다음으로 미룸
+                        sb.append(' ')
+                        continue
+                    }
 
-                temp.add(sb.toString())
-                sb.setLength(0)
+                    temp.add(sb.toString().trim())
+                    sb.setLength(0)
+                }
             }
+
             else if (isQuota(value[i])) {
                 if (!quotaOpen) {
                     quotaOpen = true
@@ -87,7 +93,7 @@ class Filter {
                     continue
                 }
 
-                temp.add(sb.toString())
+                temp.add(sb.toString().trim())
                 sb.setLength(0)
                 quotaOpen = false
             }
@@ -95,12 +101,20 @@ class Filter {
             if (duringOpen && sb.length > 200 && isTermination(value[i])) { // 개행의 내용이 지나치게 긴 경우 오류의 가능성이 높음
                 // 개행 후 따옴표를 닫지 않아 문장이 길어졌으므로 개행을 이용한 정렬을 포기
                 sb.append('"')
-                temp.add(sb.toString())
+                temp.add(sb.toString().trim())
                 sb.setLength(0)
                 duringOpen = false
             }
         }
 
-        temp.add(sb.toString())
+        temp.add(sb.toString().trim())
+
+        var arrangedText = ""
+
+        for (i in temp) {
+            arrangedText += i + "\n"
+        }
+
+        return arrangedText.substring(0, arrangedText.length - 1)
     }
 }
