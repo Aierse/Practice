@@ -13,9 +13,9 @@ class Filter {
     }
 
     companion object {
-        private val quota: CharArray = charArrayOf('\'', '\"')
-        private val bracket: CharArray = charArrayOf('{', '[', '(')
-        private val bracketClose: CharArray = charArrayOf('}', ']', ')')
+        private val quota: CharArray = charArrayOf('\"', '\'')
+        private val bracket: CharArray = charArrayOf('(', '[', '{')
+        private val bracketClose: CharArray = charArrayOf(')', ']', '}')
         private val termination: CharArray = charArrayOf('.', ',', '!', '?')
         private val quotaError : Array<String> = arrayOf<String>("\"\"", "''", "'\"", "\"'")
 
