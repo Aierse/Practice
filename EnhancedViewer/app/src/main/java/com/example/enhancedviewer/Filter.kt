@@ -150,6 +150,5 @@ class Filter {
                 }
             }
         }
-
     }
 }
