@@ -55,28 +55,36 @@ class Filter {
         for (i in value.indices) {
             sb.append(value[i])
 
-            if (isBracket(value[i])) {
-                bracketOpen = true
-            }
-            else if (isBracketClose(value[i])) {
-                bracketOpen = false
-            }
+            if (isTermination(value[i])) {
+                val nextIndex = i + 1
 
-            else if (isTermination(value[i])) {
-                if (!duringOpen && i + 1 < value.length) { // 개행중이 아닐 때
-                    val nextChar = value[i + 1]
+                if (!duringOpen) { // 개행중이 아닐 때
+                    if (nextIndex < value.length) {
+                        val nextChar = value[nextIndex]
 
-                    if (isTermination(nextChar)) // 연속된 ... 일때 넘기기
-                        continue
+                        if (isTermination(nextChar)) // 연속된 ... 일때 넘기기
+                            continue
 
-                    if (sb.length < 20 && !isQuota(nextChar)) { // 문장의 길이가 짧을 때 다음으로 미룸
+                        if (sb.length < 20 && !isQuota(nextChar)) { // 문장의 길이가 짧을 때 다음으로 미룸
+                            sb.append(' ')
+                            continue
+                        }
+
+                        temp.append(sb.toString().trim())
+                        temp.append('\n')
+                        sb.setLength(0)
+                    }
+                }
+                else { // 개행중일 때
+                    if (nextIndex < value.length) {
+                        val nextChar = value[nextIndex]
+
+                        if (nextChar == ' ' || isQuota(nextChar))
+                            continue
+
                         sb.append(' ')
                         continue
                     }
-
-                    temp.append(sb.toString().trim())
-                    temp.append('\n')
-                    sb.setLength(0)
                 }
             }
 
@@ -99,12 +107,17 @@ class Filter {
                 sb.setLength(0)
                 quotaOpen = false
             }
+
+            else if (isBracket(value[i])) {
+                bracketOpen = true
+            }
+            else if (isBracketClose(value[i])) {
+                bracketOpen = false
+            }
             // 오류를 검사하는 코드
             if (duringOpen && sb.length > 200 && isTermination(value[i])) { // 개행의 내용이 지나치게 긴 경우 오류의 가능성이 높음
                 // 개행 후 따옴표를 닫지 않아 문장이 길어졌으므로 개행을 이용한 정렬을 포기
-                sb.append('"')
-                temp.append(sb.toString().trim())
-                temp.append('\n')
+                sortByTermination(sb.toString(), temp)
                 sb.setLength(0)
                 duringOpen = false
             }
@@ -113,5 +126,29 @@ class Filter {
         temp.append(sb.toString().trim())
 
         return temp.toString()
+    }
+
+    fun sortByTermination(value: String, temp: StringBuilder) {
+        val sb = StringBuilder()
+        for (i in value.indices) {
+            if (isTermination(value[i])) {
+                if (i + 1 < value.length) { // 개행중이 아닐 때
+                    val nextChar = value[i + 1]
+
+                    if (isTermination(nextChar)) // 연속된 ... 일때 넘기기
+                        continue
+
+                    if (sb.length < 20 && !isQuota(nextChar)) { // 문장의 길이가 짧을 때 다음으로 미룸
+                        sb.append(' ')
+                        continue
+                    }
+
+                    temp.append(sb.toString().trim())
+                    temp.append('\n')
+                    sb.setLength(0)
+                }
+            }
+        }
+
     }
 }
