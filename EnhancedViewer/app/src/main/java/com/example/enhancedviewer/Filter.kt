@@ -58,7 +58,26 @@ class Filter {
             if (isTermination(value[i])) {
                 val nextIndex = i + 1
 
-                if (!duringOpen) { // 개행중이 아닐 때
+                if (duringOpen) { // 개행중일 때
+                    if (sb.length > 200) {// 개행의 내용이 지나치게 긴 경우 오류의 가능성이 높음
+                        // 개행 후 따옴표를 닫지 않아 문장이 길어졌으므로 개행을 이용한 정렬을 포기
+                        sortByTermination(sb.toString(), temp)
+                        sb.setLength(0)
+                        duringOpen = false
+                        continue
+                    }
+
+                    if (nextIndex < value.length) {
+                        val nextChar = value[nextIndex]
+
+                        if (nextChar == ' ' || isQuota(nextChar))
+                            continue
+
+                        sb.append(' ')
+                        continue
+                    }
+                }
+                else { // 개행중이 아닐 때
                     if (nextIndex < value.length) {
                         val nextChar = value[nextIndex]
 
@@ -73,17 +92,6 @@ class Filter {
                         temp.append(sb.toString().trim())
                         temp.append('\n')
                         sb.setLength(0)
-                    }
-                }
-                else { // 개행중일 때
-                    if (nextIndex < value.length) {
-                        val nextChar = value[nextIndex]
-
-                        if (nextChar == ' ' || isQuota(nextChar))
-                            continue
-
-                        sb.append(' ')
-                        continue
                     }
                 }
             }
@@ -113,13 +121,6 @@ class Filter {
             }
             else if (isBracketClose(value[i])) {
                 bracketOpen = false
-            }
-            // 오류를 검사하는 코드
-            if (duringOpen && sb.length > 200 && isTermination(value[i])) { // 개행의 내용이 지나치게 긴 경우 오류의 가능성이 높음
-                // 개행 후 따옴표를 닫지 않아 문장이 길어졌으므로 개행을 이용한 정렬을 포기
-                sortByTermination(sb.toString(), temp)
-                sb.setLength(0)
-                duringOpen = false
             }
         }
 
