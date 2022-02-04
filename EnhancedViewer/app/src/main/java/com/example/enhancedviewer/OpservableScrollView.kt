@@ -17,6 +17,7 @@ class ObservableScrollView : ScrollView {
     lateinit var nowLine: TextView
     lateinit var menu: TableLayout
     lateinit var converter: Converter
+    private var scrollStop: Boolean = true
     private var oldX: Float = 0.0F
     private var oldY: Float = 0.0F
 
@@ -33,7 +34,12 @@ class ObservableScrollView : ScrollView {
         return converter.pixelToPage(scrollY)
     }
     set(value: Int) {
-        smoothScrollTo(0, scrollY + converter.pageToPixel(value - page))
+        smoothScrollTo(0, scrollY + converter.pageToPixel(value - page) +
+                if (value > page)
+                    -converter.realLineHeight.toInt()
+                else
+                    converter.realLineHeight.toInt()
+        )
     }
 
     constructor(context: Context?) :
@@ -68,14 +74,15 @@ class ObservableScrollView : ScrollView {
                 return super.onTouchEvent(ev)
             }
             MotionEvent.ACTION_UP -> {
-                val movementX = abs(ev.x - oldX)
-                val movementY = abs(ev.y - oldY)
+                val movementX = abs(oldX - ev.x)
+                val movementY = abs(oldY - ev.y)
 
                 if (movementX < 10 && movementY < 10) {
                     val center = height / 2
 
-                    if (center < ev.y)
+                    if (center < ev.y) {
                         page++
+                    }
                     else
                         page--
 
