@@ -134,17 +134,9 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
         val edit = EditText(this).apply {
             inputType = InputType.TYPE_CLASS_NUMBER
 
-            setOnKeyListener { v, keyCode, event ->
-                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
-                    binding.textBar.line = text.toString().toInt() - 1
-                }
-
-                true
-            }
         }
 
         val dialog = AlertDialog.Builder(this).apply {
-
             setTitle("페이지 이동")
             setMessage("페이지를 입력하세요.")
             setView(edit)

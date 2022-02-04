@@ -50,7 +50,7 @@ class Filter {
     fun arrangement(text: String): String {
         val value = text.replace("\\r\\n|\\r|\\n|\\n\\r".toRegex(),"")
         val sb = StringBuilder()
-        val temp = arrayListOf<String>()
+        val temp = StringBuilder()
 
         for (i in value.indices) {
             sb.append(value[i])
@@ -74,7 +74,7 @@ class Filter {
                         continue
                     }
 
-                    temp.add(sb.toString().trim())
+                    temp.append(sb.toString().trim() + '\n')
                     sb.setLength(0)
                 }
             }
@@ -93,7 +93,7 @@ class Filter {
                     continue
                 }
 
-                temp.add(sb.toString().trim())
+                temp.append(sb.toString().trim() + '\n')
                 sb.setLength(0)
                 quotaOpen = false
             }
@@ -101,20 +101,15 @@ class Filter {
             if (duringOpen && sb.length > 200 && isTermination(value[i])) { // 개행의 내용이 지나치게 긴 경우 오류의 가능성이 높음
                 // 개행 후 따옴표를 닫지 않아 문장이 길어졌으므로 개행을 이용한 정렬을 포기
                 sb.append('"')
-                temp.add(sb.toString().trim())
+                temp.append(sb.toString().trim() + '\n')
                 sb.setLength(0)
                 duringOpen = false
             }
         }
 
-        temp.add(sb.toString().trim())
+        temp.append(sb.toString().trim())
 
-        var arrangedText = ""
 
-        for (i in temp) {
-            arrangedText += i + "\n"
-        }
-
-        return arrangedText.substring(0, arrangedText.length - 1)
+        return temp.toString()
     }
 }
