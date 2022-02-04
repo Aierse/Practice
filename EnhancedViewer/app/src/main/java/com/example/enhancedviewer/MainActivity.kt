@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
 
         val target: String = stringBuilder.toString()
 
-        return target.substring(0, target.length - 1)
+        return target.substring(0, target.length - 1) // 마지막 엔터 제외
     }
 
     fun menu(view: View) {
