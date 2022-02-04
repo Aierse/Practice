@@ -102,10 +102,8 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
             val inputStream = contentResolver.openInputStream(uri)
             val reader = BufferedReader(InputStreamReader(inputStream))
 
-            var currentline: String? = null
-
             while (true) {
-                currentline = reader.readLine() ?: break
+                var currentline = reader.readLine() ?: break
 
                 stringBuilder.append(Filter.deleteGarbageText(currentline) + "\n")
             }
