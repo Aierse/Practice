@@ -121,11 +121,7 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
     }
 
     fun menu(view: View) {
-        if (binding.menu.visibility == View.INVISIBLE)
-            binding.menu.visibility = View.VISIBLE
-        else {
-            binding.menu.visibility = View.INVISIBLE
-        }
+        binding.menu.visibility = if (binding.menu.visibility == View.INVISIBLE) View.VISIBLE else View.INVISIBLE
     }
 
     fun move(view: View) {
@@ -133,7 +129,6 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
 
         val edit = EditText(this).apply {
             inputType = InputType.TYPE_CLASS_NUMBER
-
         }
 
         val dialog = AlertDialog.Builder(this).apply {
