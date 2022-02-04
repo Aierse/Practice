@@ -18,9 +18,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
 import android.text.InputType
-import android.view.KeyEvent
-import android.view.KeyEvent.KEYCODE_ENTER
-
+import android.view.MotionEvent
 
 class MainActivity : AppCompatActivity(), ScrollViewListener {
     private lateinit var binding: ActivityMainBinding
@@ -71,6 +69,7 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
                             binding.textBar.apply {
                                 scrollY = 0
                                 nowLine = binding.nowLine
+                                menu = binding.menu
                                 converter = Converter(textView.layout.height, textBar.height, textView.lineCount)
                             }
 
