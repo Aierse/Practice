@@ -109,7 +109,6 @@ class Filter {
 
         temp.append(sb.toString().trim())
 
-
         return temp.toString()
     }
 }

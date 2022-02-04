@@ -1,9 +1,7 @@
 package com.example.enhancedviewer
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -11,7 +9,6 @@ import android.widget.ScrollView
 import android.widget.TableLayout
 import android.widget.TextView
 import androidx.core.view.GestureDetectorCompat
-import kotlin.math.abs
 
 interface ScrollViewListener {
     fun onScrollChanged(scrollView: ObservableScrollView, x: Int, y: Int, oldx: Int, oldy: Int)
@@ -22,9 +19,6 @@ class ObservableScrollView : ScrollView, GestureDetector.OnGestureListener {
     lateinit var nowLine: TextView
     lateinit var menu: TableLayout
     lateinit var converter: Converter
-    private var scrollStop: Boolean = true
-    private var oldX: Float = 0.0F
-    private var oldY: Float = 0.0F
 
     var line: Int
     get() {
@@ -98,9 +92,8 @@ class ObservableScrollView : ScrollView, GestureDetector.OnGestureListener {
 
         val center = height / 2
 
-        if (center < event.y) {
+        if (center < event.y)
             page++
-        }
         else
             page--
 
