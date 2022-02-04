@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
                                 converter = Converter(textView.layout.height, textBar.height, textView.lineCount)
                             }
 
-                            binding.totalLine.text = binding.textView.lineCount.toString()//binding.textView.lineCount.toString()
+                            binding.totalLine.text = binding.textView.lineCount.toString()
                         }
                     }
                 }
