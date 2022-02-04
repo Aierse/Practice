@@ -74,7 +74,8 @@ class Filter {
                         continue
                     }
 
-                    temp.append(sb.toString().trim() + '\n')
+                    temp.append(sb.toString().trim())
+                    temp.append('\n')
                     sb.setLength(0)
                 }
             }
@@ -93,7 +94,8 @@ class Filter {
                     continue
                 }
 
-                temp.append(sb.toString().trim() + '\n')
+                temp.append(sb.toString().trim())
+                temp.append('\n')
                 sb.setLength(0)
                 quotaOpen = false
             }
@@ -101,7 +103,8 @@ class Filter {
             if (duringOpen && sb.length > 200 && isTermination(value[i])) { // 개행의 내용이 지나치게 긴 경우 오류의 가능성이 높음
                 // 개행 후 따옴표를 닫지 않아 문장이 길어졌으므로 개행을 이용한 정렬을 포기
                 sb.append('"')
-                temp.append(sb.toString().trim() + '\n')
+                temp.append(sb.toString().trim())
+                temp.append('\n')
                 sb.setLength(0)
                 duringOpen = false
             }
