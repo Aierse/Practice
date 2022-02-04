@@ -92,10 +92,7 @@ class ObservableScrollView : ScrollView, GestureDetector.OnGestureListener {
 
         val center = height / 2
 
-        if (center < event.y)
-            page++
-        else
-            page--
+        page += if (center < event.y) 1 else -1
 
         return false
     }
