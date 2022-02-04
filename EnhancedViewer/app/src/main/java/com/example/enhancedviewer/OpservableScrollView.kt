@@ -1,19 +1,24 @@
 package com.example.enhancedviewer
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ScrollView
 import android.widget.TableLayout
 import android.widget.TextView
+import androidx.core.view.GestureDetectorCompat
 import kotlin.math.abs
 
 interface ScrollViewListener {
     fun onScrollChanged(scrollView: ObservableScrollView, x: Int, y: Int, oldx: Int, oldy: Int)
 }
 
-class ObservableScrollView : ScrollView {
+class ObservableScrollView : ScrollView, GestureDetector.OnGestureListener {
+    lateinit var mDetector: GestureDetectorCompat
     lateinit var nowLine: TextView
     lateinit var menu: TableLayout
     lateinit var converter: Converter
@@ -59,38 +64,46 @@ class ObservableScrollView : ScrollView {
         nowLine.text = (line + 1).toString()
     }
 
-    override fun onTouchEvent(ev: MotionEvent?): Boolean {
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return if (mDetector.onTouchEvent(event)) {
+            true
+        } else {
+            super.onTouchEvent(event)
+        }
+    }
+
+    override fun onDown(event: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onFling(event1: MotionEvent, event2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        return false
+    }
+
+    override fun onLongPress(event: MotionEvent) {
+    }
+
+    override fun onScroll(event1: MotionEvent, event2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
+        return false
+    }
+
+    override fun onShowPress(event: MotionEvent) {
+    }
+
+    override fun onSingleTapUp(event: MotionEvent): Boolean {
         if (menu.visibility == View.VISIBLE) {
             menu.visibility = View.INVISIBLE
             return true
         }
 
-        when (ev?.action) {
-            MotionEvent.ACTION_DOWN -> {
-                oldX = ev.x
-                oldY = ev.y
-            }
-            MotionEvent.ACTION_MOVE -> {
-                return super.onTouchEvent(ev)
-            }
-            MotionEvent.ACTION_UP -> {
-                val movementX = abs(oldX - ev.x)
-                val movementY = abs(oldY - ev.y)
+        val center = height / 2
 
-                if (movementX < 10 && movementY < 10) {
-                    val center = height / 2
-
-                    if (center < ev.y) {
-                        page++
-                    }
-                    else
-                        page--
-
-                    return true
-                }
-            }
+        if (center < event.y) {
+            page++
         }
+        else
+            page--
 
-        return super.onTouchEvent(ev)
+        return false
     }
 }

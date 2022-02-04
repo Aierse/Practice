@@ -18,7 +18,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
 import android.text.InputType
-import android.view.MotionEvent
+import androidx.core.view.GestureDetectorCompat
 
 class MainActivity : AppCompatActivity(), ScrollViewListener {
     private lateinit var binding: ActivityMainBinding
@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.textBar.mDetector = GestureDetectorCompat(this, binding.textBar)
 
         openFileExplorer()
     }
