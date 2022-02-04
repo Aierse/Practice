@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ScrollView
 import android.widget.TableLayout
 import android.widget.TextView
+import kotlin.math.abs
 
 interface ScrollViewListener {
     fun onScrollChanged(scrollView: ObservableScrollView, x: Int, y: Int, oldx: Int, oldy: Int)
@@ -67,7 +68,10 @@ class ObservableScrollView : ScrollView {
                 return super.onTouchEvent(ev)
             }
             MotionEvent.ACTION_UP -> {
-                if (ev.x == oldX && ev.y ==oldY) {
+                val movementX = abs(ev.x - oldX)
+                val movementY = abs(ev.y - oldY)
+
+                if (movementX < 10 && movementY < 10) {
                     val center = height / 2
 
                     if (center < ev.y)
