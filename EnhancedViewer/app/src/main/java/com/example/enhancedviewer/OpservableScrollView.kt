@@ -10,10 +10,6 @@ import android.widget.TableLayout
 import android.widget.TextView
 import androidx.core.view.GestureDetectorCompat
 
-interface ScrollViewListener {
-    fun onScrollChanged(scrollView: ObservableScrollView, x: Int, y: Int, oldx: Int, oldy: Int)
-}
-
 class ObservableScrollView : ScrollView, GestureDetector.OnGestureListener {
     lateinit var mDetector: GestureDetectorCompat
     lateinit var nowLine: TextView

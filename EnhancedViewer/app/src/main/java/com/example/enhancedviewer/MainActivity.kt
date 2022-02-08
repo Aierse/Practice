@@ -20,7 +20,7 @@ import java.lang.StringBuilder
 import android.text.InputType
 import androidx.core.view.GestureDetectorCompat
 
-class MainActivity : AppCompatActivity(), ScrollViewListener {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val OPEN_REQUEST_CODE = 41
     var correctionable = true
@@ -41,11 +41,6 @@ class MainActivity : AppCompatActivity(), ScrollViewListener {
         }
 
         openFileExplorer()
-    }
-
-    override fun onScrollChanged(scrollView: ObservableScrollView, x: Int, y: Int, oldx: Int, oldy: Int) {
-        binding.textBar.scrollTo(x, y)
-        binding.nowLine.text = binding.textBar.scrollY.toString()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
