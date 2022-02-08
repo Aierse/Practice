@@ -95,34 +95,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.enhancedviewer.ObservableScrollView
-            android:id="@+id/textBar"
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbarFadeDuration="0"
-            android:scrollbarSize="8dp"
-            android:scrollbarStyle="insideInset"
-            android:scrollbarThumbVertical="@color/white"
-            android:scrollbarTrackVertical="@color/black">
-
-            <LinearLayout
-                android:id="@+id/textArea"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingMultiplier="1.5"
-                    android:textColor="@color/white"
-                    android:textSize="13sp"
-                    tools:text="textContent" />
-            </LinearLayout>
-
-        </com.example.enhancedviewer.ObservableScrollView>
+            android:id="@+id/textBar"
+            android:orientation="vertical"
+            android:background="@color/black"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/recycler_item" />
 
         <TableLayout
             android:id="@+id/menu"

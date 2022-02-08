@@ -1,16 +1,16 @@
-package com.example.enhancedviewer
+package com.example.enhancedviewer2
 
 class Filter {
     private var bracketOpen: Boolean = false
     private var quotaOpen: Boolean = false
     private var duringOpen: Boolean
-    get() {
-        return bracketOpen || quotaOpen
-    }
-    set(value: Boolean) {
-        bracketOpen = value
-        quotaOpen = value
-    }
+        get() {
+            return bracketOpen || quotaOpen
+        }
+        set(value: Boolean) {
+            bracketOpen = value
+            quotaOpen = value
+        }
 
     companion object {
         private val quota: CharArray = charArrayOf('\"', '\'')
@@ -47,10 +47,10 @@ class Filter {
         return temp
     }
 
-    fun arrangement(text: String): String {
+    fun arrangement(text: String): ArrayList<String> {
         val value = text.replace("\\r\\n|\\r|\\n|\\n\\r".toRegex(),"")
         val sb = StringBuilder()
-        val temp = StringBuilder()
+        val temp = arrayListOf<String>()
 
         for (i in value.indices) {
             sb.append(value[i])
@@ -62,8 +62,7 @@ class Filter {
                     if (sb.length > 200) {// 개행의 내용이 지나치게 긴 경우 오류의 가능성이 높음
                         // 개행 후 따옴표를 닫지 않아 문장이 길어졌으므로 개행을 이용한 정렬을 포기
                         duringOpen = false
-                        temp.append(sb.toString().trim())
-                        temp.append('\n')
+                        temp.add(sb.toString().trim())
                         sb.setLength(0)
                         continue
                     }
@@ -90,8 +89,7 @@ class Filter {
                             continue
                         }
 
-                        temp.append(sb.toString().trim())
-                        temp.append('\n')
+                        temp.add(sb.toString().trim())
                         sb.setLength(0)
                     }
                 }
@@ -111,8 +109,7 @@ class Filter {
                     continue
                 }
 
-                temp.append(sb.toString().trim())
-                temp.append('\n')
+                temp.add(sb.toString().trim())
                 sb.setLength(0)
                 quotaOpen = false
             }
@@ -125,8 +122,7 @@ class Filter {
             }
         }
 
-        temp.append(sb.toString().trim())
-
-        return temp.toString()
+        temp.add(sb.toString().trim())
+        return temp
     }
 }

@@ -8,28 +8,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
-import com.example.enhancedviewer.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.view.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
 import android.text.InputType
-import androidx.core.view.GestureDetectorCompat
+import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
+import com.example.enhancedviewer.databinding.ActivityMainBinding
+import com.example.enhancedviewer2.Filter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val OPEN_REQUEST_CODE = 41
-    var correctionable = true
+    lateinit var textAdapter: TextAdapter
+    val datas = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.textBar.mDetector = GestureDetectorCompat(this, binding.textBar)
 
         openFileExplorer()
     }
@@ -57,19 +56,11 @@ class MainActivity : AppCompatActivity() {
                                 binding.name.text = cursor.getString(name)
                             }
 
-                            val content = readFile(it)
-                            binding.textView.text = Filter().arrangement(content)
+                            val content = Filter().arrangement(readFile(it))
 
-                            correctionScrollBar()
+                            initRecycler(content)
 
-                            binding.textBar.apply {
-                                scrollY = 0
-                                nowLine = binding.nowLine
-                                menu = binding.menu
-                                converter = Converter(textView.layout.height, textBar.height, textView.lineCount)
-                            }
-
-                            binding.totalLine.text = binding.textView.lineCount.toString()
+                            binding.totalLine.text = textAdapter.itemCount.toString()
                         }
                     }
                 }
@@ -130,7 +121,8 @@ class MainActivity : AppCompatActivity() {
             setView(edit)
 
             setPositiveButton("확인") { dialog, which ->
-                binding.textBar.line = edit.text.toString().toInt() - 1
+                val input = edit.text.toString().toInt() - 1
+                binding.textBar.scrollToPosition(if (input > textAdapter.itemCount) textAdapter.itemCount - 1 else input)
             }
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()
@@ -140,13 +132,24 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun correctionScrollBar() {
-        if (correctionable) {
-            val temp = View(this)
-            temp.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, binding.textBar.height - 46, 1f)
+    private fun initRecycler(textList: ArrayList<String>) {
+        textAdapter = TextAdapter(this)
+        binding.textBar.adapter = textAdapter
 
-            binding.textArea.addView(temp)
-            correctionable = false
+
+        datas.apply {
+            for (i in textList) {
+                add(i)
+            }
         }
+
+        binding.textBar.setOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                binding.nowLine.text = newState.toString()
+            }
+        })
+
+        textAdapter.datas = datas
+        textAdapter.notifyDataSetChanged()
     }
 }
