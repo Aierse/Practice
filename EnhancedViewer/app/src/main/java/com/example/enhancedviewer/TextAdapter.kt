@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class TextAdapter(private val context: Context) : RecyclerView.Adapter<TextAdapter.ViewHolder>() {
+class TextAdapter(private val context: Context, private val textHeight: Int) : RecyclerView.Adapter<TextAdapter.ViewHolder>() {
     var datas = mutableListOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -18,6 +18,16 @@ class TextAdapter(private val context: Context) : RecyclerView.Adapter<TextAdapt
     override fun getItemCount(): Int = datas.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (position == datas.lastIndex){
+            val params = holder.itemView.layoutParams as RecyclerView.LayoutParams
+            params.bottomMargin = textHeight - 1
+            holder.itemView.layoutParams = params
+        }else{
+            val params = holder.itemView.layoutParams as RecyclerView.LayoutParams
+            params.bottomMargin = 0
+            holder.itemView.layoutParams = params
+        }
+
         holder.bind(datas[position])
     }
 

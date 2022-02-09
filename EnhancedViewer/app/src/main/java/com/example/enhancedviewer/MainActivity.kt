@@ -2,6 +2,7 @@ package com.example.enhancedviewer
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -14,14 +15,16 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
 import android.text.InputType
-import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import com.example.enhancedviewer2.Filter
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val OPEN_REQUEST_CODE = 41
+    lateinit var context: Context
     lateinit var textAdapter: TextAdapter
     val datas = mutableListOf<String>()
 
@@ -29,6 +32,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        context = this
+
+        val onScrollListener: RecyclerView.OnScrollListener =
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
+
+                    val first = layoutManager.findFirstVisibleItemPosition()
+
+                    binding.nowLine.text = (first + 1).toString()
+                }
+            }
+
+        binding.textBar.addOnScrollListener(onScrollListener)
 
         openFileExplorer()
     }
@@ -65,8 +83,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-        else {
+        } else {
             //아무런 파일도 선택되지 않았을 때 종료
             finish()
         }
@@ -121,8 +138,14 @@ class MainActivity : AppCompatActivity() {
             setView(edit)
 
             setPositiveButton("확인") { dialog, which ->
-                val input = edit.text.toString().toInt() - 1
-                binding.textBar.scrollToPosition(if (input > textAdapter.itemCount) textAdapter.itemCount - 1 else input)
+                var value = edit.text.toString().toInt() - 1
+                val input = if (value < 0) 0
+                else if (value >= textAdapter.itemCount) textAdapter.itemCount - 1
+                else value
+
+                val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
+
+                layoutManager.scrollToPositionWithOffset(input, 0)
             }
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()
@@ -133,21 +156,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecycler(textList: ArrayList<String>) {
-        textAdapter = TextAdapter(this)
+        textAdapter = TextAdapter(this, binding.textBar.height)
         binding.textBar.adapter = textAdapter
 
-
         datas.apply {
+            clear()
             for (i in textList) {
                 add(i)
             }
         }
-
-        binding.textBar.setOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                binding.nowLine.text = newState.toString()
-            }
-        })
 
         textAdapter.datas = datas
         textAdapter.notifyDataSetChanged()
