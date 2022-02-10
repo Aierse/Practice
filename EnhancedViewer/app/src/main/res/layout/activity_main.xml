@@ -102,8 +102,8 @@
             android:background="@color/black"
             android:orientation="vertical"
             android:clipToPadding="false"
-            android:paddingStart="1dp"
-            android:paddingEnd="1dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/recycler_item" />
 
