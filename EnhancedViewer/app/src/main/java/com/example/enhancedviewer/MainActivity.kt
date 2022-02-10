@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity() {
             }
 
         binding.textBar.addOnScrollListener(onScrollListener)
-        binding.textBar.addOnItemTouchListener(object :
-            RecyclerView.OnItemTouchListener {
+        binding.textBar.addOnItemTouchListener(
+            object: RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 if (binding.menu.visibility == View.VISIBLE) {
                     binding.menu.visibility = View.INVISIBLE
