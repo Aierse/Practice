@@ -51,6 +51,11 @@ class MainActivity : AppCompatActivity() {
         binding.textBar.addOnItemTouchListener(object :
             RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                if (binding.menu.visibility == View.VISIBLE) {
+                    binding.menu.visibility = View.INVISIBLE
+                    return true
+                }
+
                 if(e.action == MotionEvent.ACTION_UP && binding.textBar.scrollState == RecyclerView.SCROLL_STATE_IDLE){
                     val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
                     var movement: Int = 0
@@ -170,12 +175,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addBookMark(view: View) {
-        val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
-        val first: Int = layoutManager.findFirstVisibleItemPosition()
 
-        val index = if (first > datas.lastIndex) datas.lastIndex else first
-
-        binding.nowLine.text = datas[index]
     }
 
     fun move(view: View) {
