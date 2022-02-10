@@ -18,11 +18,12 @@ class TextAdapter(private val context: Context, private val textHeight: Int) : R
     override fun getItemCount(): Int = datas.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (position == datas.lastIndex){
+        if (position == datas.lastIndex) {
             val params = holder.itemView.layoutParams as RecyclerView.LayoutParams
             params.bottomMargin = textHeight - holder.itemView.height
             holder.itemView.layoutParams = params
-        }else{
+        }
+        else {
             val params = holder.itemView.layoutParams as RecyclerView.LayoutParams
             params.bottomMargin = 0
             holder.itemView.layoutParams = params
