@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import com.example.enhancedviewer2.Filter
-import kotlinx.android.synthetic.main.recycler_item.view.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
