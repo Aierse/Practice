@@ -17,6 +17,7 @@ import java.lang.StringBuilder
 import android.text.InputType
 import android.view.MotionEvent
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import com.example.enhancedviewer2.Filter
@@ -50,19 +51,26 @@ class MainActivity : AppCompatActivity() {
         binding.textBar.addOnScrollListener(onScrollListener)
         binding.textBar.addOnItemTouchListener(object :
             RecyclerView.OnItemTouchListener {
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 if(e.action == MotionEvent.ACTION_UP && binding.textBar.scrollState == RecyclerView.SCROLL_STATE_IDLE){
                     val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
                     val last = layoutManager.findLastCompletelyVisibleItemPosition()
 
-                    layoutManager.scrollToPositionWithOffset(last, 0)
+                    val smoothScroller = object : LinearSmoothScroller(context) {
+                        override fun getVerticalSnapPreference(): Int {
+                            return LinearSmoothScroller.SNAP_TO_START
+                        }
+                    }
+
+                    smoothScroller.targetPosition = last + 1
+                    layoutManager.startSmoothScroll(smoothScroller)
                 }
 
                 return false
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+
             }
 
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
