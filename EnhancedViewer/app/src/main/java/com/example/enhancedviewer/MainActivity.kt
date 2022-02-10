@@ -69,14 +69,14 @@ class MainActivity : AppCompatActivity() {
                             movement = layoutManager.findLastCompletelyVisibleItemPosition() + 1
                             smoothScroller = object : LinearSmoothScroller(context) {
                                 override fun getVerticalSnapPreference(): Int {
-                                    return LinearSmoothScroller.SNAP_TO_START
+                                    return SNAP_TO_START
                                 }
                             }
                         } else {
                             movement = layoutManager.findFirstCompletelyVisibleItemPosition() - 1
                             smoothScroller = object : LinearSmoothScroller(context) {
                                 override fun getVerticalSnapPreference(): Int {
-                                    return LinearSmoothScroller.SNAP_TO_END
+                                    return SNAP_TO_END
                                 }
                             }
                         }
