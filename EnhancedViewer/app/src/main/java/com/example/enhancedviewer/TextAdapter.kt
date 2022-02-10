@@ -26,11 +26,6 @@ class TextAdapter(private val context: Context, private val textHeight: Int) : R
             params.bottomMargin = textHeight - holder.itemView.height
             holder.itemView.layoutParams = params
         }
-        else {
-            val params = holder.itemView.layoutParams as RecyclerView.LayoutParams
-            params.bottomMargin = 0
-            holder.itemView.layoutParams = params
-        }
 
         holder.bind(datas[position])
     }
