@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import com.example.enhancedviewer2.Filter
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val OPEN_REQUEST_CODE = 41
@@ -54,15 +53,29 @@ class MainActivity : AppCompatActivity() {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 if(e.action == MotionEvent.ACTION_UP && binding.textBar.scrollState == RecyclerView.SCROLL_STATE_IDLE){
                     val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
-                    val last = layoutManager.findLastCompletelyVisibleItemPosition()
+                    var movement: Int = 0
+                    val smoothScroller: LinearSmoothScroller
+                    val center = binding.textBar.height / 2
 
-                    val smoothScroller = object : LinearSmoothScroller(context) {
-                        override fun getVerticalSnapPreference(): Int {
-                            return LinearSmoothScroller.SNAP_TO_START
+                    if (center < e.y) {
+                        // 증앙 아래 터치 시 마지막 요소를 맨 위까지 스크롤
+                        movement = layoutManager.findLastCompletelyVisibleItemPosition() + 1
+                        smoothScroller = object : LinearSmoothScroller(context) {
+                            override fun getVerticalSnapPreference(): Int {
+                                return LinearSmoothScroller.SNAP_TO_START
+                            }
                         }
                     }
+                    else {
+                        movement = layoutManager.findFirstCompletelyVisibleItemPosition() - 1
+                            smoothScroller = object : LinearSmoothScroller(context) {
+                                override fun getVerticalSnapPreference(): Int {
+                                    return LinearSmoothScroller.SNAP_TO_END
+                                }
+                            }
+                    }
 
-                    smoothScroller.targetPosition = last + 1
+                    smoothScroller.targetPosition = movement
                     layoutManager.startSmoothScroll(smoothScroller)
                 }
 
