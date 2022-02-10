@@ -57,7 +57,10 @@ class MainActivity : AppCompatActivity() {
                     return true
                 }
 
-                if(e.action == MotionEvent.ACTION_UP && binding.textBar.scrollState == RecyclerView.SCROLL_STATE_IDLE){
+                if (e.action == MotionEvent.ACTION_DOWN)
+                    binding.textBar.clipToPadding = false
+
+                else if(e.action == MotionEvent.ACTION_UP && binding.textBar.scrollState == RecyclerView.SCROLL_STATE_IDLE){
                     val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
                     var movement: Int = 0
                     val smoothScroller: LinearSmoothScroller
@@ -80,6 +83,8 @@ class MainActivity : AppCompatActivity() {
                                 }
                             }
                     }
+
+                    binding.textBar.clipToPadding = true
 
                     smoothScroller.targetPosition = movement
                     layoutManager.startSmoothScroll(smoothScroller)
