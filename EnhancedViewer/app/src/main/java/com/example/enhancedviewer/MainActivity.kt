@@ -21,17 +21,20 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enhancedviewer.databinding.ActivityMainBinding
 import com.example.enhancedviewer2.Filter
+import kotlinx.android.synthetic.main.recycler_item.view.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val OPEN_REQUEST_CODE = 41
     lateinit var textAdapter: TextAdapter
+    lateinit var context: Context
     val datas = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        context = this
 
         val onScrollListener: RecyclerView.OnScrollListener =
             object : RecyclerView.OnScrollListener() {
@@ -172,7 +175,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addBookMark(view: View) {
-
+        
     }
 
     fun move(view: View) {
