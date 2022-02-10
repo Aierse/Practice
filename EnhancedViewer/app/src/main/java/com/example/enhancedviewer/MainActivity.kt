@@ -25,7 +25,6 @@ import com.example.enhancedviewer2.Filter
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val OPEN_REQUEST_CODE = 41
-    lateinit var context: Context
     lateinit var textAdapter: TextAdapter
     val datas = mutableListOf<String>()
 
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        context = this
+
 
         val onScrollListener: RecyclerView.OnScrollListener =
             object : RecyclerView.OnScrollListener() {
