@@ -175,7 +175,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addBookMark(view: View) {
-        
+
     }
 
     fun move(view: View) {

@@ -84,6 +84,11 @@ class Filter {
                         if (isTermination(nextChar)) // 연속된 ... 일때 넘기기
                             continue
 
+                        if (sb.length == 1) { // 첫글자가 종행문자일 때 버림
+                            sb.setLength(0)
+                            continue
+                        }
+                        
                         if (sb.length < 20 && !isQuota(nextChar)) { // 문장의 길이가 짧을 때 다음으로 미룸
                             sb.append(' ')
                             continue
