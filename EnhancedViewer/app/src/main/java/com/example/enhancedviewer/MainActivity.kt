@@ -94,7 +94,6 @@ class MainActivity : AppCompatActivity() {
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
                 TODO("not implemented")
             }
-
         })
 
         openFileExplorer()
@@ -220,15 +219,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         textAdapter.datas = datas
-
-        textAdapter.setItemClickListener(object: TextAdapter.OnItemClickListener{
-            override fun onClick(v: View, position: Int) {
-                // 클릭 시 이벤트 작성
-                datas[position] = datas[position] + "adsa"
-                textAdapter.notifyDataSetChanged()
-            }
-        })
-
         textAdapter.notifyDataSetChanged()
     }
 }

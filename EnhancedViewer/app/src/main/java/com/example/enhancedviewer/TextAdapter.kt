@@ -4,12 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class TextAdapter(private val context: Context, private val textHeight: Int) : RecyclerView.Adapter<TextAdapter.ViewHolder>() {
     var datas = mutableListOf<String>()
-    private lateinit var itemClickListener : OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.recycler_item,parent,false)
@@ -33,14 +33,6 @@ class TextAdapter(private val context: Context, private val textHeight: Int) : R
         }
 
         holder.bind(datas[position])
-    }
-
-    interface OnItemClickListener {
-        fun onClick(v: View, position: Int)
-    }
-
-    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
-        this.itemClickListener = onItemClickListener
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
