@@ -25,9 +25,9 @@ import com.example.enhancedviewer2.Filter
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val OPEN_REQUEST_CODE = 41
-    lateinit var textAdapter: TextAdapter
+    private lateinit var textAdapter: TextAdapter
     lateinit var context: Context
-    val datas = mutableListOf<String>()
+    private val datas = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,9 +159,9 @@ class MainActivity : AppCompatActivity() {
             val reader = BufferedReader(InputStreamReader(inputStream))
 
             while (true) {
-                var currentline = reader.readLine() ?: break
+                val currentLine = reader.readLine() ?: break
 
-                stringBuilder.append(Filter.deleteGarbageText(currentline) + "\n")
+                stringBuilder.append(Filter.deleteGarbageText(currentLine) + "\n")
             }
 
             inputStream?.close()
@@ -194,7 +194,7 @@ class MainActivity : AppCompatActivity() {
             setView(edit)
 
             setPositiveButton("확인") { dialog, which ->
-                var value = edit.text.toString().toInt() - 1
+                val value = edit.text.toString().toInt() - 1
                 val input = if (value < 0) 0
                 else if (value >= textAdapter.itemCount) textAdapter.itemCount - 1
                 else value
