@@ -96,11 +96,11 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/textBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/textBar"
-            android:orientation="vertical"
             android:background="@color/black"
+            android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/recycler_item" />
 
@@ -115,6 +115,7 @@
             android:visibility="invisible">
 
             <TableRow>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -138,6 +139,7 @@
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

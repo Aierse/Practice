@@ -15,6 +15,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
 import android.text.InputType
+import android.view.MotionEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enhancedviewer.databinding.ActivityMainBinding
@@ -38,8 +39,8 @@ class MainActivity : AppCompatActivity() {
             object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
 
+                    val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
                     val first = layoutManager.findFirstVisibleItemPosition()
 
                     binding.nowLine.text = (first + 1).toString()
@@ -47,6 +48,28 @@ class MainActivity : AppCompatActivity() {
             }
 
         binding.textBar.addOnScrollListener(onScrollListener)
+        binding.textBar.addOnItemTouchListener(object :
+            RecyclerView.OnItemTouchListener {
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                if(e.action == MotionEvent.ACTION_UP && binding.textBar.scrollState == RecyclerView.SCROLL_STATE_IDLE){
+                    val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
+                    val last = layoutManager.findLastCompletelyVisibleItemPosition()
+
+                    layoutManager.scrollToPositionWithOffset(last, 0)
+                }
+
+                return false
+            }
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+                TODO("not implemented")
+            }
+
+        })
 
         openFileExplorer()
     }
@@ -176,6 +199,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         textAdapter.datas = datas
+
+        textAdapter.setItemClickListener(object: TextAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                // 클릭 시 이벤트 작성
+                datas[position] = datas[position] + "adsa"
+                textAdapter.notifyDataSetChanged()
+            }
+        })
+
         textAdapter.notifyDataSetChanged()
     }
 }
