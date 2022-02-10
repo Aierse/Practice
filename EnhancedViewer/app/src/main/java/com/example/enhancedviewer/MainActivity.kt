@@ -125,6 +125,15 @@ class MainActivity : AppCompatActivity() {
         binding.menu.visibility = if (binding.menu.visibility == View.INVISIBLE) View.VISIBLE else View.INVISIBLE
     }
 
+    fun addBookMark(view: View) {
+        val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
+        val first: Int = layoutManager.findFirstVisibleItemPosition()
+
+        val index = if (first > datas.lastIndex) datas.lastIndex else first
+
+        binding.nowLine.text = datas[index]
+    }
+
     fun move(view: View) {
         binding.menu.visibility = View.INVISIBLE
 
