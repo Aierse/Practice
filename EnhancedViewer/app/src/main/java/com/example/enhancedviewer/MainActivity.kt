@@ -49,57 +49,56 @@ class MainActivity : AppCompatActivity() {
 
         binding.textBar.addOnScrollListener(onScrollListener)
         binding.textBar.addOnItemTouchListener(
-            object: RecyclerView.OnItemTouchListener {
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                if (binding.menu.visibility == View.VISIBLE) {
-                    binding.menu.visibility = View.INVISIBLE
-                    return true
-                }
-
-                if (e.action == MotionEvent.ACTION_DOWN)
-                    binding.textBar.clipToPadding = false
-
-                else if(e.action == MotionEvent.ACTION_UP && binding.textBar.scrollState == RecyclerView.SCROLL_STATE_IDLE){
-                    val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
-                    var movement: Int = 0
-                    val smoothScroller: LinearSmoothScroller
-                    val center = binding.textBar.height / 2
-
-                    if (center < e.y) {
-                        // 증앙 아래 터치 시 마지막 요소를 맨 위까지 스크롤
-                        movement = layoutManager.findLastCompletelyVisibleItemPosition() + 1
-                        smoothScroller = object : LinearSmoothScroller(context) {
-                            override fun getVerticalSnapPreference(): Int {
-                                return LinearSmoothScroller.SNAP_TO_START
-                            }
-                        }
+            object : RecyclerView.OnItemTouchListener {
+                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    if (binding.menu.visibility == View.VISIBLE) {
+                        binding.menu.visibility = View.INVISIBLE
+                        return true
                     }
-                    else {
-                        movement = layoutManager.findFirstCompletelyVisibleItemPosition() - 1
+
+                    if (e.action == MotionEvent.ACTION_DOWN)
+                        binding.textBar.clipToPadding = false
+                    else if (e.action == MotionEvent.ACTION_UP && binding.textBar.scrollState == RecyclerView.SCROLL_STATE_IDLE) {
+                        val layoutManager = binding.textBar.layoutManager as LinearLayoutManager
+                        var movement: Int = 0
+                        val smoothScroller: LinearSmoothScroller
+                        val center = binding.textBar.height / 2
+
+                        if (center < e.y) {
+                            // 증앙 아래 터치 시 마지막 요소를 맨 위까지 스크롤
+                            movement = layoutManager.findLastCompletelyVisibleItemPosition() + 1
+                            smoothScroller = object : LinearSmoothScroller(context) {
+                                override fun getVerticalSnapPreference(): Int {
+                                    return LinearSmoothScroller.SNAP_TO_START
+                                }
+                            }
+                        } else {
+                            movement = layoutManager.findFirstCompletelyVisibleItemPosition() - 1
                             smoothScroller = object : LinearSmoothScroller(context) {
                                 override fun getVerticalSnapPreference(): Int {
                                     return LinearSmoothScroller.SNAP_TO_END
                                 }
                             }
+                        }
+
+                        binding.textBar.clipToPadding = true
+
+                        smoothScroller.targetPosition = movement
+                        layoutManager.startSmoothScroll(smoothScroller)
                     }
 
-                    binding.textBar.clipToPadding = true
-
-                    smoothScroller.targetPosition = movement
-                    layoutManager.startSmoothScroll(smoothScroller)
+                    return false
                 }
 
-                return false
-            }
+                override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
 
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+                }
 
+                override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+                    TODO("not implemented")
+                }
             }
-
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-                TODO("not implemented")
-            }
-        })
+        )
 
         openFileExplorer()
     }
@@ -175,7 +174,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun menu(view: View) {
-        binding.menu.visibility = if (binding.menu.visibility == View.INVISIBLE) View.VISIBLE else View.INVISIBLE
+        binding.menu.visibility =
+            if (binding.menu.visibility == View.INVISIBLE) View.VISIBLE else View.INVISIBLE
     }
 
     fun addBookMark(view: View) {
